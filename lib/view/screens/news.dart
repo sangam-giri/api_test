@@ -1,3 +1,4 @@
+import 'package:api_parsing/model/add_news_model.dart';
 import 'package:api_parsing/model/posts_model.dart';
 import 'package:api_parsing/services/repository/news_repository.dart';
 import 'package:api_parsing/services/route/route.dart';
@@ -34,6 +35,36 @@ class _NewsScreenState extends State<NewsScreen> {
         elevation: 0,
         title: const Text("News"),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const TextField(),
+                            const TextField(),
+                            const TextField(),
+                            ElevatedButton(
+                                onPressed: () {
+                                  NewsRepository.addNews(
+                                      addNewsModel: AddNewsModel(
+                                          userId: 1,
+                                          title: "Title",
+                                          body: "Description"),
+                                      userId: 1);
+                                },
+                                child: const Text("Add"))
+                          ],
+                        ),
+                      );
+                    });
+              },
+              icon: const Icon(Icons.add))
+        ],
       ),
       body: Visibility(
         visible: postModel.isEmpty ? false : true,
